@@ -1,2 +1,2 @@
-# Somnia-BackEnd-.Net-App
-backend for somnia in .NET
+# Backend for Somnia project
+backend for Somnia in express.js
