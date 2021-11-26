@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    surname: String
+    username: String,
+    pwHash: String,
+    email: String,
+    regDate: Date,
+    newsletter: Boolean,
+    defShippingAddress: String,
+    defBillingAddress: String
 });
 
 const User = mongoose.model('User',userSchema);

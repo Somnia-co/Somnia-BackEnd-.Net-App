@@ -1,4 +1,5 @@
 const User = require("./models/user.js");
+const Order = require("./models/order.js");
 const config = require("../config/config.js");
 
 //this will be class for database class

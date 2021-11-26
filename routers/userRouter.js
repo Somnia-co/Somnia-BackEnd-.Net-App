@@ -4,7 +4,7 @@ const Database = require('../database/database.js');
 
 const db = new Database();
 
-// db.AddUser('John','Smith');
+//db.AddUser('John','Smith');
 
 
 
