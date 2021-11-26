@@ -10,6 +10,7 @@ const db = new Database();
 
 router.get('/', function(req, res){
 
+    let user = db.GetUser('John',"Smith");
     res.status(200).send('hello');
 });
 

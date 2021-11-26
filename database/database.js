@@ -31,9 +31,18 @@ class Database {
 
   }
 
-  async GetUser(_name, _surname) {
-    const user = await User.find({ name: _name, surname: _surname});
-    return user;
+  GetUser(_name, _surname) {
+
+    this.mongoose
+      .connect(this.mongoDB)
+      .then(() => {
+        console.log("DB connected Get User");
+        User.find({ name: _name, surname: _surname},function(err,user){
+            if(err) console.log(err);
+            return user;
+        });
+      })
+      .catch((err) => console.log(err));
   }
 }
 
