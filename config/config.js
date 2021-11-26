@@ -1,4 +1,6 @@
-let connectionString = 'mongodb+srv://pemix09:<password>@cluster0.e9sdv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+
+let connectionString = 'mongodb+srv://pemix09:xeCdLNZzzXZ0KYl2@cluster0.e9sdv.mongodb.net/Somnia?retryWrites=true&w=majority';
+
 
 module.exports = {
     db: connectionString
