@@ -19,28 +19,38 @@ class Database {
     this.mongoose.connect(this.mongoDB);
   }
 
-  async AddUser(_name, _surname) {
-
-    const newUser = new User({ name: _name, surname: _surname });
+  async AddUser(_name, _password, _email, _newsLetter, _shipAdd, _billAdd) {
+    let date = new Date();
+    //we have to hash password here
+    const newUser = new User({
+      username: _name,
+      pwHash: _password,
+      email: _email,
+      newsletter: _newsLetter,
+      defShippingAddr: _shipAdd,
+      defBillingAddress: _billAdd,
+      regDate: date
+    });
+    console.log(newUser);
     this.mongoose
       .connect(this.mongoDB)
       .then(() => {
         console.log("DB connected");
-        newUser.save();
+        newUser.save(function(err, user) {
+          console.log("User saved");
+        });
       })
       .catch((err) => console.log(err));
-
   }
 
   GetUser(_name, _surname) {
-
     this.mongoose
       .connect(this.mongoDB)
       .then(() => {
         console.log("DB connected Get User");
-        User.find({ name: _name, surname: _surname},function(err,user){
-            if(err) console.log(err);
-            return user;
+        User.find({ name: _name, surname: _surname }, function (err, user) {
+          if (err) console.log(err);
+          return user;
         });
       })
       .catch((err) => console.log(err));
