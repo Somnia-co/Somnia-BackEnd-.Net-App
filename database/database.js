@@ -17,6 +17,18 @@ class Database {
     this.mongoDB = config.db;
   }
 
+  async CreateRecord(record) {
+    this.mongoose
+    .connect(this.mongoDB)
+    .then(() => {
+      console.log("DB connected");
+      record.save(function(err, user) {
+        if(err) console.log('Error when saving'+record);
+        else console.log('Success saving'+record);
+      })
+    })
+    .catch((err) => console.log(err));
+  }
   Test() {
     this.AddUser('John','Smith','example@gmail.com',true,'Almeria, UAL',"Almeria, UAL, Dean's office");
     this.AddProduct('tee','some nice tshirt',12.22, 1021);
@@ -30,64 +42,32 @@ class Database {
 
   async AddFavouriteProduct(_userID, _productCode){
     let _date = new Date();
-    let newfavoriteProduct = new Favorite({
+    let newFavoriteProduct = new Favorite({
       userID: _userID,
       productCode: _productCode,
       dateAdded: _date 
     });
-    this.mongoose
-    .connect(this.mongoDB)
-    .then(() => {
-      console.log("DB connected");
-      newFavoriteProduct.save(function(err, user) {
-        console.log("User saved");
-      });
-    })
-    .catch((err) => console.log(err));
+    await this.CreateRecord(newFavoriteProduct);
   }
   async AddProductDetail(_productID, _productCode,_stock,_Pictures,_Price,_colorHEX){
     let newDetail = new Detail({
       productID: _productID,
       productCode: _productCode,
-      stock: _Stock,
+      stock: _stock,
       Pictures: _Pictures,
       Price: _Price,
-      colorHEX: _ColorHEX
+      colorHEX: _colorHEX
     });
-    this.mongoose
-    .connect(this.mongoDB)
-    .then(() => {
-      console.log("DB connected");
-      newDetail.save(function(err, user) {
-        console.log("User saved");
-      });
-    })
-    .catch((err) => console.log(err));
+    await this.CreateRecord(newDetail);
   }
   async AddOrder(_userID, _shipAdd, _billAdd, _prodList){
     let _date = new Date();
     let newOrder = new Order({orderDate: _date, userID: _userID, shipAdd: _shipAdd, billAdd: _billAdd, productList: _prodList});
-    this.mongoose
-    .connect(this.mongoDB)
-    .then(() => {
-      console.log("DB connected");
-      newOrder.save(function(err, user) {
-        console.log("User saved");
-      });
-    })
-    .catch((err) => console.log(err));
+    await this.CreateRecord(newOrder);
   }
   async AddProduct(_name, _description, _price, _prodCode){
-    let newProduct = new Product({name: _name, description: _description, price: _price, prod});
-    this.mongoose
-      .connect(this.mongoDB)
-      .then(() => {
-        console.log("DB connected");
-        newProduct.save(function(err, user) {
-          console.log("User saved");
-        });
-      })
-      .catch((err) => console.log(err));
+    let newProduct = new Product({name: _name, description: _description, price: _price, productCode:_prodCode});
+    await this.CreateRecord(newProduct);
   }
   async AddUser(_name, _password, _email, _newsLetter, _shipAdd, _billAdd) {
     let date = new Date();
@@ -101,15 +81,7 @@ class Database {
       defBillingAddress: _billAdd,
       regDate: date
     });
-    this.mongoose
-      .connect(this.mongoDB)
-      .then(() => {
-        console.log("DB connected");
-        newUser.save(function(err, user) {
-          console.log("User saved");
-        });
-      })
-      .catch((err) => console.log(err));
+    this.CreateRecord(newUser);
   }
 
   GetUser(_name, _surname) {

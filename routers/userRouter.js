@@ -7,7 +7,7 @@ const db = new Database();
 router.get("/", function (req, res) {
   db.AddUser();
 });
-router.get("/", function (req, res) {
+router.get("/test", function (req, res) {
   db.Test();
   res.status(200).send("hello");
 });
