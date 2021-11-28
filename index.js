@@ -9,10 +9,6 @@ app.get('/',(req,res) =>{
     res.status(200).send('hello world');
 })
 
-//it will route all http methods
-app.all('route all', (req, res) =>{
-    res.status(200).send('routed all');
-})
 
 //specify which router to use
 app.use('/products', productRouter);
