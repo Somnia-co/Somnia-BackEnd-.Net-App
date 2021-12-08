@@ -29,15 +29,27 @@ class Database {
     })
     .catch((err) => console.log(err));
   }
-  Test() {
-    this.AddUser('John','Smith','example@gmail.com',true,'Almeria, UAL',"Almeria, UAL, Dean's office");
-    this.AddProduct('tee','some nice tshirt',12.22, 1021);
-    this.AddOrder(21312,'Ual, Aleria','Ual, Almeria, deans office',["product1","product2"]);
-    this.AddProductDetail(21312,321312,12,['dsadas','dasa'],12.21,'HEXCOLOR');
-    this.AddFavouriteProduct(21,312)
+
+  async ReadRecord(type, query){
+
+    let _record;
+    await type.find(query,(err, record) => {
+      if(err) console.log('Error finding record of type:'+type);
+      else _record = record;
+    }).clone().catch(err => console.log(err));
+    return _record;
   }
-  GetProduct(id) {
-    this.mongoose.connect(this.mongoDB);
+  async DeleteRecord(type,query){
+    this.mongoose
+    .connect(this.mongoDB)
+    .then(() => {
+      console.log("DB connected");
+      type.delete(function(err, user) {
+        if(err) console.log('Error when saving'+record);
+        else console.log('Success saving'+record);
+      })
+    })
+    .catch((err) => console.log(err));
   }
 
   async AddFavouriteProduct(_userID, _productCode){
@@ -84,17 +96,29 @@ class Database {
     this.CreateRecord(newUser);
   }
 
-  GetUser(_name, _surname) {
-    this.mongoose
-      .connect(this.mongoDB)
-      .then(() => {
-        console.log("DB connected Get User");
-        User.find({ name: _name, surname: _surname }, function (err, user) {
-          if (err) console.log(err);
-          return user;
-        });
-      })
-      .catch((err) => console.log(err));
+  async GetUser(id) {
+    let ObjectId = this.mongoose.Types.ObjectId;
+    let query = {_id: new ObjectId(id)}
+    let user = await User.find({username:"John"}).then(function(){
+      console.log(user);
+      return user;
+    })
+
+    // await this.ReadRecord(User,query).then((user) => {
+    //   console.log(user);
+    //   return user;
+    // });
+  }
+  DeleteUser(_id) {
+    this.DeleteRecord(User,_id).then(() => console.log("record deleted"));}
+  UpdateUser(_id){
+
+  }
+  GetProduct(_name){
+    this.ReadRecord(Product,{}).then((product) => {
+      console.log(product);
+      return product;
+    })
   }
 }
 
