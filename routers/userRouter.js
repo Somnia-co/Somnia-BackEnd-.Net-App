@@ -30,16 +30,6 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/:id",async (req, res) => {
-  try{
-    const user = await User.findById(req.params.id);
-    res.status(200).json(user);
-  }
-  catch(err){
-    res.status(500).json({message: err.message});
-  }
-});
-
 router.put("/update/:id",async (req, res) => {
   try{
     const user = await User.findById(req.params.id);
@@ -52,6 +42,17 @@ router.put("/update/:id",async (req, res) => {
     res.status(500).json({message: err.message});
   }
 })
+
+router.get("/:id",async (req, res) => {
+  try{
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  }
+  catch(err){
+    res.status(500).json({message: err.message});
+  }
+});
+
 
 router.get("/",async(req, res) => {
   try{
