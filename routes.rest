@@ -16,6 +16,7 @@ POST http://localhost:8080/users/create
 Content-Type: application/json
 
 {
-    "name": "John",
-    "subscribedChannel": "Something"
+    "username": "John",
+    "pwHash": "dasdasdasfw3534",
+    "email": "pemix09@onet.pl"
 }
