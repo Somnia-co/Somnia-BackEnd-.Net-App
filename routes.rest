@@ -19,3 +19,13 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:8080/users/delete/61b1ef673a7ad57d2bd323b7
+
+###
+
+PUT http://localhost:8080/users/update/61b1ef673a7ad57d2bd323b7
+Content-Type:application/json
+
+{
+    "username" : "Przemek",
+    "email":"pemix09@gmail.com"
+}

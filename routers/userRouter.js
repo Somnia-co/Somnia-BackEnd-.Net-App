@@ -42,7 +42,10 @@ router.get("/:id",async (req, res) => {
 
 router.put("update/:id",async (req, res) => {
   try{
-    const users = await User.find();
+    const user = await User.findById(req.params.id);
+    user.email = req.body.email;
+    user.username = req.body.username;
+    await user.save();
     res.json(users);
   }
   catch(err){
