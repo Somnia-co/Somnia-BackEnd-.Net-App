@@ -20,3 +20,6 @@ Content-Type: application/json
     "pwHash": "dasdasdasfw3534",
     "email": "pemix09@onet.pl"
 }
+
+###
+PUT http://localhost:8080/delete/21

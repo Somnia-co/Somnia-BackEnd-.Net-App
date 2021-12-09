@@ -20,8 +20,10 @@ router.post("/create",async (req, res) => {
 })
 router.put("/delete/:id", async (req, res) => {
   try{
-    const users = await User.find();
-    res.json(users);
+    const user = await User.findById(req.params.id);
+    if(user == null) return res.status(404).json({"message": "Cannot find user"});
+    user.remove();
+    res.status(200).json({"message": "User deleted"});
   }
   catch(err){
     res.status(500).json({message: err.message});
