@@ -1,7 +1,3 @@
-//basic request for / endpoint
-GET http://localhost:8080/
-
-###
 
 GET http://localhost:8080/users/61b1ef673a7ad57d2bd323b7
 
@@ -22,4 +18,4 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:8080/delete/21
+DELETE  http://localhost:8080/users/delete/61b1ef673a7ad57d2bd323b7
