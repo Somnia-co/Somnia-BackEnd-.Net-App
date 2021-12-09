@@ -13,12 +13,22 @@ router.put("/delete/:id", function (req, res) {
   db.AddProduct("tee","Tee created in class romm",120.23,2141);
   res.status(200).send("hello");
 });
-router.get("/:id",function (req, res){
+
+router.get("/:id",async (req, res) => {
   let user = db.GetUser(req.params.id).then(function (){
     console.log(user);
     res.status(200).send(user);
   })
 });
+router.get("/",async(req, res) => {
+  try{
+    const users = await db.GetUsers();
+    res.json(users);
+  }
+  catch(err){
+    res.status(500).json({message: err.message});
+  }
+})
 router.put("update/:id",function (req, res){
   this.db.update(req.params.id);
   res.status(200).send("User deleted successfully");

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const User = require("./models/user.js");
 const Product = require("./models/products.js");
 const Order = require("./models/order.js");
@@ -14,7 +15,8 @@ class Database {
       console.log(e);
     }
 
-    this.mongoDB = config.db;
+    //this.mongoDB = config.db;
+    this.mongoDB = process.env.DATABASE_URL;
   }
 
   async CreateRecord(record) {
@@ -109,6 +111,7 @@ class Database {
     //   return user;
     // });
   }
+ 
   DeleteUser(_id) {
     this.DeleteRecord(User,_id).then(() => console.log("record deleted"));}
   UpdateUser(_id){

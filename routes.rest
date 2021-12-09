@@ -1,0 +1,21 @@
+//basic request for / endpoint
+GET http://localhost:8080/
+
+###
+
+GET http://localhost:8080/users
+
+###
+
+GET http://localhost:8080/products
+
+###
+
+//how the POST request looks like, the body is in json
+POST http://localhost:8080/users/create
+Content-Type: application/json
+
+{
+    "name": "John",
+    "subscribedChannel": "Something"
+}

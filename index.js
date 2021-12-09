@@ -1,16 +1,18 @@
-const http = require('http');
+require('dotenv').config();
 const express = require('express');
 const port = 8080;
 const app = express();
 const productRouter = require('./routers/productRouter.js');
 const userRouter = require('./routers/userRouter.js')
+const mongoose = require('mongoose');
 
-app.get('/',(req,res) =>{
-    res.status(200).send('hello world');
-})
+mongoose.connect(process.env.DATABASE_URL);
+const db = mongoose.connection
+db.on('error',(error) => console.log(error));
+db.once('open',() => console.log('Connected to database')); 
 
-
-//specify which router to use
+//routes that we use
+app.use(express.json());
 app.use('/products', productRouter);
 app.use('/users', userRouter);
 

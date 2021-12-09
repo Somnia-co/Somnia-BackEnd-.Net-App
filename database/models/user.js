@@ -4,7 +4,11 @@ const userSchema = new mongoose.Schema({
     username: String,
     pwHash: String,
     email: String,
-    regDate: Date,
+    regDate: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
     newsletter: Boolean,
     defShippingAddress: String,
     defBillingAddress: String
