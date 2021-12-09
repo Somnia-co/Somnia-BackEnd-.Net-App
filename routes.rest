@@ -22,7 +22,7 @@ DELETE  http://localhost:8080/users/delete/61b1ef673a7ad57d2bd323b7
 
 ###
 
-PUT http://localhost:8080/users/update/61b1ef673a7ad57d2bd323b7
+PUT http://localhost:8080/users/update/61b23ddc980946c8c4d2c67a
 Content-Type:application/json
 
 {

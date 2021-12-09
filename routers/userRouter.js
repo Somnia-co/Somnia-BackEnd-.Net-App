@@ -40,13 +40,13 @@ router.get("/:id",async (req, res) => {
   }
 });
 
-router.put("update/:id",async (req, res) => {
+router.put("/update/:id",async (req, res) => {
   try{
     const user = await User.findById(req.params.id);
     user.email = req.body.email;
     user.username = req.body.username;
-    await user.save();
-    res.json(users);
+    const editedUser = await user.save();
+    res.json(editedUser);
   }
   catch(err){
     res.status(500).json({message: err.message});
