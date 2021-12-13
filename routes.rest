@@ -1,0 +1,31 @@
+
+GET http://localhost:8080/users/61b724358533f72f3e7b0b99
+
+###
+
+GET http://localhost:8080/products
+
+###
+
+//how the POST request looks like, the body is in json
+POST http://localhost:8080/users/create
+Content-Type: application/json
+
+{
+    "username": "John",
+    "pwHash": "dasdasdasfw3534",
+    "email": "pemix09@dasdaonet.pl"
+}
+
+###
+DELETE  http://localhost:8080/users/delete/61b724358533f72f3e7b0b99
+
+###
+
+PUT http://localhost:8080/users/update/61b23ddc980946c8c4d2c67a
+Content-Type:application/json
+
+{
+    "username" : "Przemek",
+    "email":"pemix09@gmail.com"
+}
