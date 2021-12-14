@@ -12,9 +12,9 @@ router.get('/:userID',async(req, res) => {
     }
 });
 
-router.get('/:orderID',async(req, res) => {
+router.get('/:favoriteID',async(req, res) => {
     try{
-        const favorite = await Favorite.findById(req.params.orderID);
+        const favorite = await Favorite.findById(req.params.favoriteID);
         res.status(200).json(favorite);
     }
     catch(err){

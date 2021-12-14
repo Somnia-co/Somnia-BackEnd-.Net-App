@@ -36,4 +36,17 @@ router.put('/update',async (req, res) => {
     }
 })
 
+router.post('/Create',async(req, res) => {
+    try{
+        const product = new Product()
+        product.name = req.body.name;
+        product.description = req.body.description;
+        await Product.create(product);
+        res.status(200).json({"message":"product created"});
+    }
+    catch{
+        res.tatus(500).json({"message":"Error when creating product occurred"});
+    }
+})
+
 module.exports = router;
