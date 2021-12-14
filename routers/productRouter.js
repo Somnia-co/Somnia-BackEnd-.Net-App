@@ -5,7 +5,7 @@ const Product = require('../database/models/products');
 router.get('/:name',async (req,res) => {
     const products = await Product.find();
     res.status(200).json(products);
-})
+});
 
 router.get('/',async (req,res) => {
     try{
@@ -23,7 +23,7 @@ router.delete('/:id',async (req, res) => {
     catch(err){
         res.status(500).json({"message": err.message});
     }
-})
+});
 router.put('/update',async (req, res) => {
     try{
         const product = await Product.findById(req.body.id);
@@ -34,7 +34,7 @@ router.put('/update',async (req, res) => {
     catch{
         res.tatus(500).json({"message":"User with id: "+ req.body.id+" not updated/error occured"});
     }
-})
+});
 
 router.post('/Create',async(req, res) => {
     try{
@@ -45,8 +45,8 @@ router.post('/Create',async(req, res) => {
         res.status(200).json({"message":"product created"});
     }
     catch{
-        res.tatus(500).json({"message":"Error when creating product occurred"});
+        res.status(500).json({"message":"Error when creating product occurred"});
     }
-})
+});
 
 module.exports = router;
