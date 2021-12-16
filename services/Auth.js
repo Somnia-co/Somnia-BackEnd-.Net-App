@@ -1,10 +1,11 @@
 const Cookie = require('./Cookies');
+const session = require('express-session');
 class Auth{
     constructor(){
 
     }
     static isLogged(cookie){
-        if(cookie!= null) return true;
+        if(session.Cookie!= null) return true;
         return false; 
     }
     static LogIn(username){
@@ -20,14 +21,8 @@ class Auth{
         return jsonCookie;
     }
     static LogOut(){
-        let someDate = new Date();
-        let numberOfDaysToAdd = -6;
-        someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
-        let cookie = {
-            username: username,
-            expires: someDate
-        };
-        let jsonCookie = JSON.stringify(cookie);
+        
+        session.Cookie = null;
         return jsonCookie;
     }
 }

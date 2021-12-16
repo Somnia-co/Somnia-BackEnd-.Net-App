@@ -65,11 +65,9 @@ router.post("/Register", async(req,res) => {
       pwHash: Password.hashPassword(req.body.password)
     });
     await user.save();
-    let cookie = req.session.cookie;
-    cookie.expires = false;
-    cookie = Auth.LogIn(req.body.username);
+    let cookie = Auth.LogIn(req.body.username);
     session.Cookie = cookie;
-    res.status(200).json("Zalogowano pomyślnie");
+    res.status(200).json("Registered successfully");
   }
   catch(err){
     res.status(500).json(err.message);
@@ -77,49 +75,65 @@ router.post("/Register", async(req,res) => {
 });
 
 router.delete("/delete/:id", async (req, res) => {
-  try{
-    const user = await User.findById(req.params.id);
-    if(user == null) return res.status(404).json({"message": "Cannot find user"});
-    await user.remove();
-    res.status(200).json({"message": "User deleted"});
+  if(Auth.isLogged() == false) res.status(400).json('Access denied');
+  else{
+    try{
+      const user = await User.findById(req.params.id);
+      if(user == null) return res.status(404).json({"message": "Cannot find user"});
+      await user.remove();
+      res.status(200).json({"message": "User deleted"});
+    }
+    catch(err){
+      res.status(500).json({message: err.message});
+    }
   }
-  catch(err){
-    res.status(500).json({message: err.message});
-  }
+  
 });
 
 router.put("/update/:id",async (req, res) => {
-  try{
-    const user = await User.findById(req.params.id);
-    user.email = req.body.email;
-    user.username = req.body.username;
-    const editedUser = await user.save();
-    res.json(editedUser);
+  if(Auth.isLogged() == false) res.status(400).json('Access denied');
+  else{
+    try{
+      const user = await User.findById(req.params.id);
+      user.email = req.body.email;
+      user.username = req.body.username;
+      const editedUser = await user.save();
+      res.json(editedUser);
+    }
+    catch(err){
+      res.status(500).json({message: err.message});
+    }
   }
-  catch(err){
-    res.status(500).json({message: err.message});
-  }
+  
 })
 
 router.get("/:id",async (req, res) => {
-  try{
-    const user = await User.findById(req.params.id);
-    res.status(200).json(user);
+  if(Auth.isLogged() == false) res.status(400).json('Access denied');
+  else{
+    try{
+      const user = await User.findById(req.params.id);
+      res.status(200).json(user);
+    }
+    catch(err){
+      res.status(500).json({message: err.message});
+    }
   }
-  catch(err){
-    res.status(500).json({message: err.message});
-  }
+  
 });
 
 
 router.get("/",async(req, res) => {
-  try{
-    const users = await User.find();
-    res.json(users);
+  if(Auth.isLogged() == false) res.status(400).json('Access denied');
+  else{
+    try{
+      const users = await User.find();
+      res.json(users);
+    }
+    catch(err){
+      res.status(500).json({message: err.message});
+    }
   }
-  catch(err){
-    res.status(500).json({message: err.message});
-  }
+  
 });
 
 
