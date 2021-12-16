@@ -41,6 +41,7 @@ router.post('/Create',async(req, res) => {
         const product = new Product()
         product.name = req.body.name;
         product.description = req.body.description;
+        product.picture = req.body.picture;
         await Product.create(product);
         res.status(200).json({"message":"product created"});
     }
