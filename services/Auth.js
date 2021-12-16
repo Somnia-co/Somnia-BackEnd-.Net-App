@@ -4,7 +4,7 @@ class Auth{
 
     }
     static isLogged(cookie){
-        if(cookie.expires > new Date()) return true;
+        if(cookie!= null) return true;
         return false; 
     }
     static LogIn(username){

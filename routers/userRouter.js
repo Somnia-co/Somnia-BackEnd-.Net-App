@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const User = require("../database/models/user");
 const router = express.Router();
 const Password = require('../services/Password');
@@ -32,6 +33,7 @@ router.post("/Login", async(req,res) => {
       let cookie = req.session.cookie;
       cookie.expires = false;
       cookie = Auth.LogIn(req.body.username);
+      session.Cookie = cookie;
       res.status(200).json("Zalogowano pomyślnie");
     }
     else{
@@ -43,8 +45,8 @@ router.post("/Login", async(req,res) => {
   }
 });
 router.post("/LogOut", async(req, res) =>{
-  await req.session.destroy();
-  return;
+  session.Cookie = null;
+  res.status(200).json("Successful LogOut");
 })
 router.post("/Register", async(req,res) => {
   try{
@@ -63,9 +65,11 @@ router.post("/Register", async(req,res) => {
       pwHash: Password.hashPassword(req.body.password)
     });
     await user.save();
-    let session = req.session;
-    session.cookie = Auth.LogIn(req.body.username);
-    res.status(200).json("user added");
+    let cookie = req.session.cookie;
+    cookie.expires = false;
+    cookie = Auth.LogIn(req.body.username);
+    session.Cookie = cookie;
+    res.status(200).json("Zalogowano pomyślnie");
   }
   catch(err){
     res.status(500).json(err.message);

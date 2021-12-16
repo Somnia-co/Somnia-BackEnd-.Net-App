@@ -52,6 +52,13 @@ Content-Type:application/json
     "email": "pemix09@gmail.com"
 }
 ###
+POST  http://localhost:8080/users/LogOut
+Content-Type: application/json
+
+{
+
+}
+###
 
 POST  http://localhost:8080/users/Register
 Content-Type:application/json

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const session = require('express-session');
 const port = 8080;
 const app = express();
 const cors = require('cors');
@@ -21,6 +22,8 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(session({name: "SessionID",secret: "123"}))
 
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection
