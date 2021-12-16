@@ -12,7 +12,7 @@ POST http://localhost:8080/users/create
 Content-Type: application/json
 
 {
-    "username": "John",
+    "username": "dadas",
     "pwHash": "dasdasdasfw3534",
     "email": "pemix09@dasdaonet.pl"
 }
@@ -36,7 +36,28 @@ POST  http://localhost:8080/products/Create
 Content-Type:application/json
 
 {
-    "name": "some nice hoodie",
-    "description": "description",
+    "name": "sodasdas",
+    "description": "descdsadasdation",
     "picture": "data:image/jpeg;base64,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"
+}
+
+###
+
+POST  http://localhost:8080/users/Login
+Content-Type:application/json
+
+{
+    "username": "Przemek",
+    "password": "dadas",
+    "email": "pemix09@gmail.com"
+}
+###
+
+POST  http://localhost:8080/users/Register
+Content-Type:application/json
+
+{
+    "username": "Przemdddddekssdd3",
+    "password": "dadas",
+    "email": "pemix09@gddsadfsdfs.com"
 }

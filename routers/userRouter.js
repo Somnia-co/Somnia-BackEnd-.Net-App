@@ -1,6 +1,9 @@
 const express = require("express");
-const router = express.Router();
 const User = require("../database/models/user");
+const router = express.Router();
+const Password = require('../services/Password');
+const Cookie = require('../services/Cookies');
+const Auth = require('../services/Auth');
 
 router.post("/create",async (req, res) => {
   const user = new User({
@@ -17,7 +20,52 @@ router.post("/create",async (req, res) => {
   catch(err){
     res.status(500).json({message: err.message});
   }
-})
+});
+router.post("/Login", async(req,res) => {
+
+  try{
+    const user = await User.find({username: req.body.username});
+    if(user == null) throw new Error();
+
+
+    if(Password.hashPassword(req.body.password) == user.pwHash)
+    {
+      Auth.LogIn(req.body.password, req.body.username);
+      return;
+    }
+    res.status(500).json("Wrong password");
+  }
+  catch(err){
+    console.log(err);
+  }
+});
+
+router.post("/Register", async(req,res) => {
+  try{
+    let user = await User.findOne({username: req.body.username});
+    if(user != null) {
+      console.log(user);
+      throw new Error("User in database");
+    }
+    user = await User.findOne({email: req.body.username});
+    if(user != null) {
+      console.log(user);
+      throw new Error("User in database");
+    }
+
+    user = new User({
+      username: req.body.username,
+      email: req.body.username,
+      pwHash: Password.hashPassword(req.body.password)
+    });
+    await user.save();
+    res.status(200).json("user added");
+  }
+  catch(err){
+    res.status(500).json(err.message);
+  }
+});
+
 router.delete("/delete/:id", async (req, res) => {
   try{
     const user = await User.findById(req.params.id);
@@ -62,6 +110,7 @@ router.get("/",async(req, res) => {
   catch(err){
     res.status(500).json({message: err.message});
   }
-})
+});
+
 
 module.exports = router;

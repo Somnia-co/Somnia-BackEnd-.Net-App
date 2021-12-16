@@ -5,11 +5,22 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 app.options('*', cors());
+let passport = require('passport');
+let bodyParser = require('body-parser');
+let LocalStrategy = require("passport-local");
+let passportLocalMongoose =require("passport-local-mongoose");
 const productRouter = require('./routers/productRouter.js');
 const userRouter = require('./routers/userRouter.js');
 const orderRouter = require('./routers/orderRouter.js');
 const favoritesRouter = require('./routers/favoriteRouter.js');
 const mongoose = require('mongoose');
+app.use(require("express-session")({
+    secret: "Rusty is a dog",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection
