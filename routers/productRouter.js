@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../database/models/products');
+const Auth = require('../services/Auth');
 
 router.get('/:name',async (req,res) => {
     const products = await Product.find();
@@ -16,16 +17,22 @@ router.get('/',async (req,res) => {
     }
 });
 router.delete('/:id',async (req, res) => {
-    try{
+    if(Auth.isLogged() == false) res.status(400).json('Access denied');
+    else{
+        try{
         const products = await Product.findById(req.params.id);
         res.status(200).json({"message":"user with id: "+req.params.id+" deleted"});
     }
     catch(err){
         res.status(500).json({"message": err.message});
     }
+    }
+    
 });
 router.put('/update',async (req, res) => {
-    try{
+    if(Auth.isLogged() == false) res.status(400).json('Access denied');
+    else{
+        try{
         const product = await Product.findById(req.body.id);
         product.name = req.body.name;
         product.description = req.body.description;
@@ -34,10 +41,14 @@ router.put('/update',async (req, res) => {
     catch{
         res.tatus(500).json({"message":"User with id: "+ req.body.id+" not updated/error occured"});
     }
+    }
+    
 });
 
 router.post('/Create',async(req, res) => {
-    try{
+    if(Auth.isLogged() == false) res.status(400).json('Access denied');
+    else {
+        try{
         const product = new Product()
         product.name = req.body.name;
         product.description = req.body.description;
@@ -48,6 +59,8 @@ router.post('/Create',async(req, res) => {
     catch{
         res.status(500).json({"message":"Error when creating product occurred"});
     }
+    }
+    
 });
 
 module.exports = router;
