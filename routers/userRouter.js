@@ -24,32 +24,36 @@ router.post("/create",async (req, res) => {
 router.post("/Login", async(req,res) => {
 
   try{
-    const user = await User.find({username: req.body.username});
+    const user = await User.findOne({username: req.body.username});
     if(user == null) throw new Error();
-
 
     if(Password.hashPassword(req.body.password) == user.pwHash)
     {
-      Auth.LogIn(req.body.password, req.body.username);
-      return;
+      let cookie = req.session.cookie;
+      cookie.expires = false;
+      cookie = Auth.LogIn(req.body.username);
+      res.status(200).json("Zalogowano pomyślnie");
     }
-    res.status(500).json("Wrong password");
+    else{
+      throw new Error("Wrong password");
+    }
   }
   catch(err){
     console.log(err);
   }
 });
-
+router.post("/LogOut", async(req, res) =>{
+  await req.session.destroy();
+  return;
+})
 router.post("/Register", async(req,res) => {
   try{
     let user = await User.findOne({username: req.body.username});
     if(user != null) {
-      console.log(user);
       throw new Error("User in database");
     }
     user = await User.findOne({email: req.body.username});
     if(user != null) {
-      console.log(user);
       throw new Error("User in database");
     }
 
@@ -59,6 +63,8 @@ router.post("/Register", async(req,res) => {
       pwHash: Password.hashPassword(req.body.password)
     });
     await user.save();
+    let session = req.session;
+    session.cookie = Auth.LogIn(req.body.username);
     res.status(200).json("user added");
   }
   catch(err){

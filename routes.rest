@@ -47,7 +47,7 @@ POST  http://localhost:8080/users/Login
 Content-Type:application/json
 
 {
-    "username": "Przemek",
+    "username": "pPrzemdddddekssdd3",
     "password": "dadas",
     "email": "pemix09@gmail.com"
 }
@@ -57,7 +57,7 @@ POST  http://localhost:8080/users/Register
 Content-Type:application/json
 
 {
-    "username": "Przemdddddekssdd3",
+    "username": "pPrzemdddddekssdd3",
     "password": "dadas",
     "email": "pemix09@gddsadfsdfs.com"
 }
