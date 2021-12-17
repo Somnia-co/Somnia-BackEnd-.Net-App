@@ -9,12 +9,16 @@ router.get('/:name',async (req,res) => {
 });
 
 router.get('/',async (req,res) => {
-    try{
-        const products = await Product.find();
-        res.status(200).json(products);
-    }catch(err){
-        res.status(500).json({"message":err.message});
+    if(Auth.isLogged() == false) res.status(400).json('Access denied');
+    else {
+        try{
+            const products = await Product.find();
+            res.status(200).json(products);
+        }catch(err){
+            res.status(500).json({"message":err.message});
+        }
     }
+  
 });
 router.delete('/:id',async (req, res) => {
     if(Auth.isLogged() == false) res.status(400).json('Access denied');

@@ -34,7 +34,7 @@ router.post("/Login", async(req,res) => {
       cookie.expires = false;
       cookie = Auth.LogIn(req.body.username);
       session.Cookie = cookie;
-      res.status(200).json("Zalogowano pomyślnie");
+      res.status(200).json("Successfull login");
     }
     else{
       throw new Error("Wrong password");
